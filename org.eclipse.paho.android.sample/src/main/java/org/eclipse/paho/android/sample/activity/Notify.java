@@ -53,8 +53,15 @@ class Notify {
     String ticker = contentTitle + " " + messageString;
 
     //build the pending intent that will start the appropriate activity
+    int pendingIntentFlag;
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+      pendingIntentFlag = PendingIntent.FLAG_IMMUTABLE | 0;
+    } else {
+      pendingIntentFlag = 0;
+    }
+
     PendingIntent pendingIntent = PendingIntent.getActivity(context,
-            0, intent, 0);
+            0, intent, pendingIntentFlag);
 
     //build the notification
     Builder notificationCompat = new Builder(context);
